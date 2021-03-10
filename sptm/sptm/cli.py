@@ -11,6 +11,8 @@ from os.path import join
 @click.option("--d",'--delete', default=None, help="name of snippet file to be deleted (with extention)")
 def cli(l,add,f,c,s,d):
     snippet_location = join(__file__.replace('sptm\\cli.py' , '') , 'snippets')
+    if not os.path.exists(snippet_location):
+        os.makedirs(snippet_location)
     if l:
         snippet_list = os.listdir(snippet_location)
         for snippet in snippet_list:
