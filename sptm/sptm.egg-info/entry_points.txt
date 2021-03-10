@@ -1,0 +1,4 @@
+
+    [console_scripts]
+    sptm=sptm.cli:cli
+    
