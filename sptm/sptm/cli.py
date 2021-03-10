@@ -8,14 +8,19 @@ from os.path import join
 @click.option("--f", '--file', default=None, help="file to be added as snippet")
 @click.option("--c", '--create',default=None, help="create a new file pass snippet name using -s")
 @click.option("--s",'--snippet', default=None, help="name of snippet")
-def cli(l,add,f,c,s):
+@click.option("--d",'--delete', default=None, help="name of snippet file to be deleted (with extention)")
+def cli(l,add,f,c,s,d):
     snippet_location = join(__file__.replace('sptm\\cli.py' , '') , 'snippets')
     if l:
         snippet_list = os.listdir(snippet_location)
         for snippet in snippet_list:
             click.echo(snippet)
         return
+    if d:
+        os.remove(join(snippet_location , d))
+        return
     current_user_path = os.path.abspath('.')
+
     if c and s:
         if add or f:
             click.echo('cannot use both --add and --c at the same time')
@@ -47,7 +52,4 @@ def cli(l,add,f,c,s):
             newfile.close()
         click.echo('snippet '+add+' added')
         return
-    #newfile = open(snippet_location + add , 'w')
-    #newfile.write(f)
-    #newfile.close()
-    click.echo('some argument might be missing retry')
+    click.echo('some argument are missing retry')
