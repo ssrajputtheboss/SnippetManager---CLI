@@ -4,12 +4,12 @@ from os.path import join
 
 @click.command()
 @click.option("--l", '--list', default=None, help="list all snippets argument should be 'all'")
-@click.option("--a", '-add', default=None, help="specify name of snippet to be added")
+@click.option("--a", '--add', default=None, help="specify name of snippet to be added")
 @click.option("--f", '--file', default=None, help="file to be added as snippet")
 @click.option("--c", '--create',default=None, help="create a new file pass snippet name using -s")
 @click.option("--s",'--snippet', default=None, help="name of snippet")
 @click.option("--d",'--delete', default=None, help="name of snippet file to be deleted (with extention)")
-def cli(l,add,f,c,s,d):
+def cli(l,a,f,c,s,d):
     snippet_location = join(__file__.replace('sptm\\cli.py' , '') , 'snippets')
     if not os.path.exists(snippet_location):
         os.makedirs(snippet_location)
@@ -24,8 +24,8 @@ def cli(l,add,f,c,s,d):
     current_user_path = os.path.abspath('.')
 
     if c and s:
-        if add or f:
-            click.echo('cannot use both --add and --c at the same time')
+        if a or f:
+            click.echo('cannot use both --a and --c at the same time')
             return
         fname , ext = os.path.splitext(c)
         if ext == '':
@@ -40,18 +40,18 @@ def cli(l,add,f,c,s,d):
         newfile.close()
         click.echo('file created succesfully')
         return
-    if add and f:
-        if '.' in add:
-            newfile = open(join(snippet_location , add) , 'w')
+    if a and f:
+        if '.' in a:
+            newfile = open(join(snippet_location , a) , 'w')
             readfile = open(join(current_user_path , f) , 'r')
             newfile.write(readfile.read())
             newfile.close()
         else:
             readfile = open(join(current_user_path , f) , 'r')
             fname,ext = os.path.splitext(f)
-            newfile = open(join(snippet_location , add+ext) , 'w')
+            newfile = open(join(snippet_location , a+ext) , 'w')
             newfile.write(readfile.read())
             newfile.close()
-        click.echo('snippet '+add+' added')
+        click.echo('snippet '+a+' added')
         return
     click.echo('some argument are missing retry')
