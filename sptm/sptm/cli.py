@@ -4,7 +4,7 @@ from os.path import join
 
 @click.command()
 @click.option("--l", '--list', default=None, help="list all snippets argument should be 'all'")
-@click.option("--add", '-a', default=None, help="specify name of snippet to be added")
+@click.option("--a", '-add', default=None, help="specify name of snippet to be added")
 @click.option("--f", '--file', default=None, help="file to be added as snippet")
 @click.option("--c", '--create',default=None, help="create a new file pass snippet name using -s")
 @click.option("--s",'--snippet', default=None, help="name of snippet")
